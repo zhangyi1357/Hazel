@@ -1,7 +1,8 @@
 workspace "Hazel"
 	architecture "x64"
 
-	configurations {
+	configurations
+	{
 		"Debug",
 		"Release",
 		"Dist"
@@ -17,12 +18,15 @@ project "Hazel"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	files {
+	files
+	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
 	}
 
-	includedirs {
+	includedirs
+	{
+		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include"
 	}
 
@@ -31,12 +35,14 @@ project "Hazel"
 		staticruntime "On"
 		systemversion "latest"
 
-		defines {
+		defines
+		{
 			"HZ_PLATFORM_WINDOWS",
 			"HZ_BUILD_DLL"
 		}
 
-		postbuildcommands {
+		postbuildcommands
+		{
 			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
 		}
 
@@ -60,24 +66,30 @@ project "Sandbox"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	files {
+	files
+	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
 	}
 
-	includedirs {
+	includedirs
+	{
 		"Hazel/vendor/spdlog/include",
 		"Hazel/src"
 	}
 
-	links { "Hazel" }
+	links
+	{
+		"Hazel"
+	}
 
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
 
-		defines {
+		defines
+		{
 			"HZ_PLATFORM_WINDOWS"
 		}
 
